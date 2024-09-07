@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 const samplePrompts = [
-  "a gentleman otter in a 19th century portrait",
+  "modern bohemian living room, couch, coffee table, rug, plants",
   "bowl of ramen in the style of a comic book",
   "flower field drawn by Jean-Jacques Sempé",
   "illustration of a taxi cab in the style of r crumb",
-  "multicolor hyperspace",
+  "a flamingo",
   "painting of fruit on a table in the style of Raimonds Staprans",
-  "pencil sketch of robots playing poker",
+  "realistic photo of robots playing poker",
   "photo of an astronaut riding a horse",
 ];
 import sample from "lodash/sample";

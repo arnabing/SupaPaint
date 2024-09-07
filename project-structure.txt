@@ -1,0 +1,38 @@
+.
+├── LICENSE
+├── README.md
+├── components
+│   ├── ChatInterface.js
+│   ├── ChatMessage.js
+│   ├── MaskDrawing.js
+│   ├── download.js
+│   ├── prompt-form.js
+│   └── spinner.js
+├── jsconfig.json
+├── lib
+│   ├── add-background-to-png.js
+│   ├── data-uri-to-buffer.js
+│   └── imageUtils.js
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── pages
+│   ├── _app.js
+│   ├── api
+│   │   ├── predictions
+│   │   │   └── [id].js
+│   │   └── predictions.js
+│   ├── index.js
+│   └── paint.js
+├── postcss.config.js
+├── project-structure.txt
+├── public
+│   ├── bedroom.png
+│   ├── cherries-oranges-bananas.mp4
+│   ├── favicon.ico
+│   └── livingroom.png
+├── styles
+│   └── globals.css
+└── tailwind.config.js
+
+8 directories, 28 files

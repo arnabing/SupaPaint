@@ -1,21 +1,20 @@
-const API_HOST = process.env.REPLICATE_API_HOST || "https://api.replicate.com";
+import Replicate from "replicate";
 
-console.log({ API_HOST });
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
+});
 
 export default async function handler(req, res) {
-  const response = await fetch(`${API_HOST}/v1/predictions/${req.query.id}`, {
-    headers: {
-      Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.status !== 200) {
-    let error = await response.json();
-    res.statusCode = 500;
-    res.end(JSON.stringify({ detail: error.detail }));
-    return;
-  }
+  const { id } = req.query;
 
-  const prediction = await response.json();
-  res.end(JSON.stringify(prediction));
+  try {
+    console.log("Fetching prediction with ID:", id);
+    const prediction = await replicate.predictions.get(id);
+    console.log("Prediction fetched:", prediction);
+
+    res.status(200).json(prediction);
+  } catch (error) {
+    console.error('Error fetching prediction:', error);
+    res.status(500).json({ error: error.message });
+  }
 }
