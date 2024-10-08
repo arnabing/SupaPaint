@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required parameters' });
     }
 
-    console.log("Received dimensions:", { width, height });
+    console.log('API: Received inpainting request', { prompt, hasImage: !!image, hasMask: !!mask, width, height });
 
     const prediction = await replicate.predictions.create({
       version: "95b7223104132402a9ae91cc677285bc5eb997834bd2349fa486f53910fd68b3",
@@ -32,8 +32,8 @@ export default async function handler(req, res) {
         prompt,
         image,
         mask,
-        width: parseInt(width),
-        height: parseInt(height),
+        width,
+        height,
         num_outputs: 1,
         guidance_scale: 7.5,
         num_inference_steps: 50,
@@ -41,11 +41,11 @@ export default async function handler(req, res) {
       },
     });
 
-    console.log("Prediction created:", prediction);
+    console.log("Inpainting prediction created:", prediction);
 
     return res.status(201).json(prediction);
   } catch (error) {
-    console.error('Error in API route:', error);
+    console.error('API: Error in inpainting predictions route:', error);
     return res.status(500).json({ error: error.message, stack: error.stack });
   }
 }
