@@ -1,3 +1,4 @@
+
 import Replicate from "replicate";
 
 export const config = {
@@ -14,6 +15,7 @@ const replicate = new Replicate({
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
+    console.log('API: Inpainting - Method not allowed');
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
@@ -21,10 +23,17 @@ export default async function handler(req, res) {
     const { prompt, image, mask, width, height } = req.body;
 
     if (!prompt || !image || !mask || !width || !height) {
+      console.log('API: Inpainting - Missing required parameters');
       return res.status(400).json({ error: 'Missing required parameters' });
     }
 
-    console.log('API: Received inpainting request', { prompt, hasImage: !!image, hasMask: !!mask, width, height });
+    console.log('API: Inpainting request received', {
+      prompt,
+      imageUrl: image.substring(0, 50) + '...',
+      maskSize: mask.length,
+      width,
+      height
+    });
 
     const prediction = await replicate.predictions.create({
       version: "95b7223104132402a9ae91cc677285bc5eb997834bd2349fa486f53910fd68b3",
@@ -41,11 +50,11 @@ export default async function handler(req, res) {
       },
     });
 
-    console.log("Inpainting prediction created:", prediction);
+    console.log("API: Inpainting prediction created", { id: prediction.id });
 
     return res.status(201).json(prediction);
   } catch (error) {
-    console.error('API: Error in inpainting predictions route:', error);
+    console.error('API: Error in inpainting predictions route:', error.message);
     return res.status(500).json({ error: error.message, stack: error.stack });
   }
 }

@@ -10,7 +10,12 @@
     "speed-up-video": "ffmpeg -i cherries-oranges-bananas.mov -filter:v 'setpts=PTS/3' cherries-oranges-bananas.mp4"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "buffer-to-data-url": "^1.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "formidable": "^3.5.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.88.0",
@@ -22,7 +27,8 @@
     "react-sketch-canvas": "^6.2.0",
     "replicate": "^0.32.0",
     "sharp": "^0.33.4",
-    "tailwind": "^4.0.0"
+    "tailwind": "^4.0.0",
+    "tailwind-merge": "^2.5.3"
   },
   "devDependencies": {
     "@types/node": "^22.7.2",

@@ -12,8 +12,8 @@ const ImageEditor = forwardRef(({ image, isDrawing }, ref) => {
     const updateCanvasSize = () => {
       if (imageRef.current) {
         const { width, height } = imageRef.current.getBoundingClientRect();
+        console.log('Canvas size updated:', { width, height });
         setCanvasSize({ width, height });
-        console.log("ImageEditor: Canvas size set to", { width, height });
       }
     };
 
@@ -24,21 +24,23 @@ const ImageEditor = forwardRef(({ image, isDrawing }, ref) => {
 
   useImperativeHandle(ref, () => ({
     clearMask: () => {
+      console.log('Clearing mask');
       if (canvasRef.current) {
         canvasRef.current.clearCanvas();
         console.log("ImageEditor: Mask cleared");
       }
     },
     getStrokes: async () => {
+      console.log('Getting strokes');
       if (canvasRef.current) {
         const strokes = await canvasRef.current.exportPaths();
+        console.log('Strokes exported:', { strokeCount: strokes.length });
         console.log("ImageEditor: Exporting strokes", { strokeCount: strokes.length, canvasSize });
         return { strokes, canvasSize };
       }
       return { strokes: [], canvasSize };
     }
   }));
-
   return (
     <div className="relative w-full" style={{ paddingBottom: '75%' }}>
       <img

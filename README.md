@@ -2,37 +2,40 @@
 
 ## Project Overview
 
-SupaPaint is a Next.js application designed for AI-powered image editing, particularly for staging houses and general photo editing. The app features an iMessage-like chat interface that allows users to upload images, mask specific areas for editing, and send these images to Replicate for processing using Stable Diffusion or other AI models.
+SupaPaint is a Next.js application designed for AI-powered image editing and generation. The app features a chat interface that allows users to upload images, mask specific areas for editing, and interact with various AI models for image processing and generation.
 
 ## Current State
 
 - Basic functionality implemented: image upload, mask creation, and API integration.
+- Inpainting with SDXL and image generation via Replicate API.
 - Chat interface displays user inputs and AI responses.
 - Image optimization for SDXL implemented.
 - Debug tab shows input image, mask, and output.
-- Inpainting with SDXL is functional.
+- Task-based workflow for different image processing operations.
 
 ## Recent Changes
 
-1. Implemented SDXL inpainting functionality.
-2. Added debug tab for input/output visualization.
-3. Improved error handling and logging.
-4. Optimized image and mask preparation for API requests.
+1. Implemented a unified API handler for both inpainting and image generation tasks.
+2. Simplified state management using React hooks.
+3. Created a consistent approach to image handling across different tasks.
+4. Updated the prompt bar to be more flexible based on the current task.
+5. Improved error handling and logging for API interactions.
 
 ## Immediate Goals
 
-1. Implement mask clearing for all images, including generated ones.
-2. Enable mask drawing on any image in the chat history, including AI-generated images.
-3. Refine the UI for a more intuitive mask drawing experience.
-4. Implement undo/redo functionality for mask drawing.
-5. Add option to adjust mask brush size.
+1. Refine the unified API handler to ensure consistent functionality for all tasks.
+2. Implement proper state management for tracking the current task and relevant data.
+3. Enhance the UI to provide clear guidance based on the selected task.
+4. Ensure seamless switching between inpainting and image generation tasks.
+5. Implement robust error handling and user feedback for all operations.
+6. Prepare the codebase for future integration with an LLM for task suggestions.
 
 ## Key Features
 
-- iMessage-like chat interface
-- Image uploading and display
+- Chat-based interface for interacting with AI models
+- Image uploading, display, and editing
 - Accurate image masking functionality using ReactSketchCanvas
-- Integration with AI services for image processing
+- Integration with multiple AI services for image processing and generation
 - Debug tab for payload inspection
 - SDXL optimization for uploaded images
 
@@ -42,7 +45,7 @@ SupaPaint is a Next.js application designed for AI-powered image editing, partic
 - React
 - Tailwind CSS
 - react-sketch-canvas (for mask drawing)
-- Replicate API (for AI image processing)
+- Replicate API (for AI image processing and generation)
 
 ## Project Structure
 
@@ -51,19 +54,47 @@ supapaint/
 ├── components/
 │   ├── ChatInterface.js
 │   ├── ImageEditor.js
+│   ├── GeminiLayout.js (new)
+│   ├── sidebar-desktop.js (new)
+│   ├── sidebar-mobile.js (new)
+│   └── ui/ (new folder with Gemini UI components)
 ├── lib/
-│   └── imageUtils.js
+│   ├── imageUtils.js
+│   └── hooks/
+│       └── use-sidebar.js (new)
 ├── pages/
 │   ├── api/
-│   │   └── predictions.js
+│   │   ├── predictions.js
+│   │   └── generate/
+│   │       └── image.js (new)
 │   ├── _app.js
-│   └── paint.js
+│   └── index.js (formerly paint.js)
 ├── styles/
 │   └── globals.css
 └── public/
     ├── bedroom.png
     └── livingroom.png
 ```
+
+## Known Issues
+
+- **Inpainting Functionality**: Currently experiencing issues with inpainting due to recent CORS adjustments. The API may not be receiving all required parameters, or there may be issues with the API version being used.
+  - **Relevant Code**: 
+    - `inpaint.js`: 
+      ```javascript:pages/api/edit/inpaint.js
+      startLine: 16
+      endLine: 59
+      ```
+    - `apiRouter.js`: 
+      ```javascript:lib/apiRouter.js
+      startLine: 1
+      endLine: 25
+      ```
+    - `index.js`: 
+      ```javascript:pages/index.js
+      startLine: 1
+      endLine: 100
+      ```
 
 ## Getting Started
 
@@ -73,16 +104,18 @@ supapaint/
 4. Run the development server: `npm run dev` or `yarn dev`
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-
 ## Next Steps
 
-1. Integrate Replicate Flux API for image generation without masks.
-2. Implement a user interface for selecting between inpainting and image generation.
-3. Add support for other AI models (e.g., remove background, search and recolor).
-4. Integrate an LLM for enhancing user prompts and selecting appropriate AI models.
-5. Improve error handling and user feedback for API interactions.
-6. Implement comprehensive testing (unit tests, integration tests).
-7. Optimize performance for processing larger images and complex masks.
+1. Finalize the integration of Gemini UI components, ensuring smooth functionality in our JavaScript environment.
+2. Complete the implementation of the Replicate Flux API for image generation.
+3. Develop a user-friendly interface for switching between different AI tasks (inpainting, generation, etc.).
+4. Enhance the chat interface to support a richer history of interactions, including easy access to past images and edits.
+5. Implement an LLM integration for enhancing user prompts and automatically selecting appropriate AI models.
+6. Improve error handling and user feedback for all API interactions.
+7. Develop a comprehensive testing suite, including unit tests and integration tests.
+8. Optimize performance for processing larger images and complex masks.
+9. Implement user authentication and session management for personalized experiences.
+10. Explore additional AI models for specialized tasks (e.g., background removal, style transfer).
 
 ## Contributing
 

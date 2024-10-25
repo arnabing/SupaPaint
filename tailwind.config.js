@@ -9,11 +9,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "rgb(255, 247, 145)",
-        black: colors.black,
-        white: colors.white,
-        shade: "rgba(0, 0, 0, 0.45)",
-        bgshade: "rgba(0, 0, 0, 0.05)",
+        primary: '#00ff00', // Define your primary green color
+        secondary: '#ffffff', // Define your secondary color (white in this case)
+        background: '#000000', // Define your background color (black)
       },
     },
   },

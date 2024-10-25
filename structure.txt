@@ -1,0 +1,64 @@
+.
+├── LICENSE
+├── README.md
+├── components
+│   ├── ChatInterface.js
+│   ├── ErrorBoundary.js
+│   ├── ImageEditor.js
+│   ├── Layout.js
+│   ├── Sidebar.js
+│   ├── TaskSelector.js
+│   ├── sidebar-mobile.tsx
+│   ├── sidebar.tsx
+│   ├── spinner.js
+│   └── ui
+│       ├── alert-dialog.tsx
+│       ├── badge.tsx
+│       ├── button.tsx
+│       ├── codeblock.tsx
+│       ├── dialog.tsx
+│       ├── dropdown-menu.tsx
+│       ├── icons.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── select.tsx
+│       ├── separator.tsx
+│       ├── sheet.tsx
+│       ├── sonner.tsx
+│       ├── switch.tsx
+│       ├── textarea.tsx
+│       └── tooltip.tsx
+├── jsconfig.json
+├── lib
+│   └── imageUtils.js
+├── next-env.d.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── pages
+│   ├── _app.js
+│   ├── api
+│   │   ├── [id].js
+│   │   ├── edit
+│   │   │   ├── inpaint.js
+│   │   │   └── removeBackground.js
+│   │   └── generate
+│   │       └── image.js
+│   ├── index.js
+│   └── paint.js
+├── postcss.config.js
+├── project-structure.txt
+├── prompts
+│   └── add-comments.md
+├── public
+│   ├── bedroom.png
+│   ├── cherries-oranges-bananas.mp4
+│   ├── favicon.ico
+│   └── livingroom.png
+├── structure.txt
+├── styles
+│   └── globals.css
+├── tailwind.config.js
+└── tsconfig.json
+
+11 directories, 51 files

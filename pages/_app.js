@@ -1,11 +1,11 @@
+import Layout from '../components/Layout';
 import '../styles/globals.css';
-import ErrorBoundary from '../components/ErrorBoundary';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ErrorBoundary>
+    <Layout>
       <Component {...pageProps} />
-    </ErrorBoundary>
+    </Layout>
   );
 }
 

@@ -1,29 +1,47 @@
-import React, { useState, useCallback, forwardRef } from 'react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { Paintbrush, Eraser } from 'lucide-react';
 import ImageEditor from './ImageEditor';
+import PromptBar from './PromptBar';
+import FullScreenImageView from './FullScreenImageView';
 
-const ChatInterface = forwardRef(({ chatMessages, onSendMessage, onMaskCreated, onToggleMask, selectedImage, activeImageId, isDrawing, hasMask, imageEditorRef }, ref) => {
-  const [input, setInput] = useState('');
+const ChatInterface = forwardRef(({
+  chatMessages,
+  onSendMessage,
+  onMaskCreated,
+  onToggleMask,
+  selectedImage,
+  activeImageId,
+  isDrawing,
+  hasMask,
+  imageEditorRef,
+  onFileUpload
+}, ref) => {
+  const [fullScreenImage, setFullScreenImage] = useState(null);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    if (input.trim() || isDrawing) {
-      console.log("[ChatInterface] Sending message:", input);
-      onSendMessage(input);
-      setInput('');
+  const handleImageClick = (image, messageId) => {
+    if (!isDrawing || activeImageId !== messageId) {
+      setFullScreenImage(image);
     }
-  }, [input, onSendMessage, isDrawing]);
+  };
+
+  const handleCloseFullScreen = () => {
+    setFullScreenImage(null);
+  };
+
+  const handleSubmit = (message) => {
+    onSendMessage(message);
+  };
 
   return (
     <div className="flex flex-col h-full w-full chat-background">
-      <div className="flex-grow overflow-auto p-4 w-full">
+      <div className="flex-grow overflow-auto p-4">
         {chatMessages.map((message, index) => (
           <div key={index} className={`mb-4 ${message.type === 'user' ? 'text-right' : 'text-left'}`}>
             <div className={`inline-block rounded-lg p-3 ${message.image ? 'w-full max-w-2xl' : 'max-w-[75%]'} 
               ${message.type === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'}`}>
               {message.content && <p className="mb-2 break-words">{message.content}</p>}
               {message.image && (
-                <div>
+                <div onClick={() => handleImageClick(message.image, message.id)}>
                   <ImageEditor
                     ref={imageEditorRef}
                     image={message}
@@ -31,7 +49,10 @@ const ChatInterface = forwardRef(({ chatMessages, onSendMessage, onMaskCreated, 
                     isDrawing={isDrawing && activeImageId === message.id}
                   />
                   <button
-                    onClick={() => onToggleMask(message.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleMask(message.id);
+                    }}
                     className="mt-2 bg-black text-white rounded-md px-2 py-1 text-xs flex items-center"
                   >
                     {isDrawing && activeImageId === message.id ? (
@@ -52,24 +73,15 @@ const ChatInterface = forwardRef(({ chatMessages, onSendMessage, onMaskCreated, 
           </div>
         ))}
       </div>
-
-      <div className="p-4 bg-white">
-        <form onSubmit={handleSubmit} className="flex">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Enter a prompt..."
-            className="flex-grow rounded-l-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-          />
-          <button
-            type="submit"
-            className="bg-indigo-600 text-white rounded-r-md px-4 py-2 text-sm font-medium"
-          >
-            Send
-          </button>
-        </form>
-      </div>
+      {fullScreenImage && (
+        <FullScreenImageView
+          image={fullScreenImage}
+          onClose={handleCloseFullScreen}
+          onMaskToggle={() => onToggleMask(activeImageId)}
+          isMaskActive={isDrawing}
+          onSendMessage={handleSubmit}
+        />
+      )}
     </div>
   );
 });

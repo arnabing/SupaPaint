@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "lib/utils.js", "components/ui/icons.js", "components/sidebar-mobile.js", "components/ui/sheet.js"  ],
   "exclude": [
     "node_modules"
   ]
